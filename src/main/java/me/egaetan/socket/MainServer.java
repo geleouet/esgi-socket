@@ -14,8 +14,13 @@ public class MainServer {
 	public static void main(String[] args) throws IOException {
 		var socketServer = new ServerSocket(8080);
 		
+		while (true) {
+			handleRequest(socketServer.accept());
+		}
 		
-		Socket socket = socketServer.accept();
+	}
+
+	private static void handleRequest(Socket socket) throws IOException {
 		var inputStream = new BufferedInputStream(socket.getInputStream());
 		var scanner = new Scanner(inputStream);
 		String firstLine = scanner.nextLine();
@@ -36,6 +41,5 @@ public class MainServer {
 		writer.flush();
 		outputStream.flush();
 		outputStream.close();
-		
 	}
 }
